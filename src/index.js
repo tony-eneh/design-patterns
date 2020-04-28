@@ -6,7 +6,7 @@ const display = document.querySelector('#main');
 //component class
 interface ListComponent {
     draw();
-    _parent: Component;
+    _parent: ListComponent;
 }
 
 class Item implements ListComponent {
@@ -34,7 +34,7 @@ abstract class List implements ListComponent {
     remove(component: ListComponent) {
         this._children = this._children.filter(child => child != component);
     };
-    _children: Component[];
+    _children: ListComponent[];
 }
 
 class OrderedList extends List {
