@@ -12,6 +12,7 @@ const display = document.querySelector('#main');
 class Item {
     constructor(textContent) {
         this.textContent = textContent;
+        this._parent = {};
     }
     draw() {
         this.domNode = document.createElement('li');
@@ -25,10 +26,16 @@ class Item {
 }
 
 class List {
+    constructor() {
+        this._parent = {};
+        this._children = [];
+    }
 
     draw() {
         console.log `super.draw() was called`;
         this._children.forEach(child => child.draw());
+        //attach this list to dom, if not the children wont be visibles
+        this._parent.domNode.append(this.domNode);
     }
     add(component) {
         this._children.push(component);
@@ -38,7 +45,6 @@ class List {
     remove(component) {
         this._children = this._children.filter(child => child != component);
     };
-    _children = [];
 }
 
 class OrderedList extends List {
@@ -77,6 +83,6 @@ uList.add(item5);
 console.log `uList2 ${uList}`;
 
 //show on screen
-uList._parent = display;
+uList._parent.domNode = display;
 uList.draw();
 display.append(uList.domNode);
