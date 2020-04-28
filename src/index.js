@@ -4,37 +4,41 @@ const display = document.querySelector('#main');
 //1. Composite Pattern
 
 //component class
-interface ListComponent {
-    draw();
-    _parent: ListComponent;
-}
+// interface ListComponent {
+//     draw();
+//     _parent: ListComponent;
+// }
 
-class Item implements ListComponent {
-    constructor(textContent: string) {
+class Item {
+    constructor(textContent) {
         this.textContent = textContent;
     }
     draw() {
         this.domNode = document.createElement('li');
+        console.log `newly created li element ${this.domNode}`;
+        // debugger;
         this.domNode.textContent = this.textContent;
+        console.log `the node ${this.domNode}`;
         this._parent.domNode.append(this.domNode);
     }
 
 }
 
-abstract class List implements ListComponent {
+class List {
 
     draw() {
+        console.log `super.draw() was called`;
         this._children.forEach(child => child.draw());
     }
-    add(component: ListComponent) {
+    add(component) {
         this._children.push(component);
         //let the new child know who the parent is
         component._parent = this;
     };
-    remove(component: ListComponent) {
+    remove(component) {
         this._children = this._children.filter(child => child != component);
     };
-    _children: ListComponent[];
+    _children = [];
 }
 
 class OrderedList extends List {
@@ -55,7 +59,7 @@ class UnorderedList extends List {
 
 let oList = new OrderedList();
 let uList = new UnorderedList();
-let uList2 = new UnorderedList();
+// let uList2 = new UnorderedList();
 let item1 = new Item('Yesso Item 1');
 let item2 = new Item('itemi tu');
 let item3 = new Item('nke ato');
@@ -69,7 +73,10 @@ uList.add(item1);
 uList.add(item2);
 uList.add(oList);
 uList.add(item5);
-uList2.add(uList);
+// uList2.add(uList);
+console.log `uList2 ${uList}`;
 
 //show on screen
-display.append(uList2);
+uList._parent = display;
+uList.draw();
+display.append(uList.domNode);
