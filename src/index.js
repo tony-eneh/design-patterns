@@ -79,8 +79,7 @@ uList.add(item1);
 uList.add(item2);
 uList.add(oList);
 uList.add(item5);
-// uList2.add(uList);
-console.log `uList2 ${uList}`;
+console.log `uList ${uList}`;
 
 //show on screen
 uList._parent.domNode = display;
